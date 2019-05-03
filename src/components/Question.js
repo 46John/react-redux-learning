@@ -6,23 +6,28 @@ class Question extends Component {
         console.log('Question Props: ', this.props);
         const {
             question,
-            questionAuthorName
+            questionAuthor
         } = this.props;
 
         return (
-            <div className="col-12">
+            <div className="col-12 question-card">
                 <div className="row">
-                    <div className="col-12">
-                        <p>{questionAuthorName} asks</p>
-                    </div>
                     <div className="col-4">
+                        {questionAuthor && (
+                            <div className="question-card__author">
+                                <img src={questionAuthor.avatarURL} alt="author profile image"/>
+                                <p><strong>{questionAuthor ? questionAuthor.name : ""}</strong> asks</p>
+                            </div>
+                        )}
 
                     </div>
                     <div className="col-8">
-                        <h1>Would you Rather:</h1>
-                        <p>{question.optionOne.text}</p>
-                        <p>or</p>
-                        <p>{question.optionTwo.text}</p>
+                        <div className="question-card__question">
+                            <h3>Would you Rather:</h3>
+                            <p>{question.optionOne.text}</p>
+                            <p>or</p>
+                            <p>{question.optionTwo.text}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -32,10 +37,10 @@ class Question extends Component {
 
 function mapStateToProps({questions, users}, { id }){
     const question = questions[id];
-    const questionAuthorName = users[question.author] ? users[question.author].name : null;
+    const questionAuthor = users[question.author];
     return{
         question,
-        questionAuthorName
+        questionAuthor
     }
 }
 
